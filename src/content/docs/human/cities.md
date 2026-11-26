@@ -1,13 +1,15 @@
 ---
 title: Cities
 description: Cities are large, dense human settlements; this page covers how they began, what they do and which metropolitan areas are the largest in the world.
+template: doc
+draft: false
 ---
 
 A **city** is a large and permanent human settlement with dense housing and a concentration of trade, government and services. Definitions vary from country to country, and the population threshold can range from a few thousand to tens of thousands. Geographers often prefer the **metropolitan area**, which includes the built-up suburbs that surround a central city.
 
 ![Tokyo at night, with the illuminated Tokyo Tower in Minato](/wiki-trial/images/cities.jpg)
 
-*Photo: [David Kernan](https://commons.wikimedia.org/wiki/File:Tokyo_Tower,_Minato_City.jpg), [CC BY 4.0](https://creativecommons.org/licenses/by/4.0), via Wikimedia Commons.*
+_Photo:_ [_David Kernan_](https://commons.wikimedia.org/wiki/File:Tokyo_Tower,_Minato_City.jpg)*,* [_CC BY 4.0_](https://creativecommons.org/licenses/by/4.0)*, via Wikimedia Commons.*
 
 ## Origins and location
 
@@ -40,6 +42,6 @@ Cities cover only about 1 to 3 per cent of Earth's land, yet they are home to mo
 - [Urbanization](../urbanization/)
 - [Population](../population/)
 - [Japan](../../world/asia/japan/)
-- [Nile](../../places/nile/)
+- [Nile](../../places/nile/) 🤘🏼
 
 [^1]: Different agencies define metropolitan boundaries differently, so the same city can rank higher or lower between sources.
