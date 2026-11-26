@@ -1,0 +1,43 @@
+# Sveltia CMS settings, based on https://sveltiacms.app/docs/frameworks/starlight
+backend:
+  name: github
+  repo: gastonalonso/wiki-trial
+  branch: main # every save is a commit to main, which publishes the site
+
+# Uploaded images are saved in public/images. The path written into a page
+# starts with /wiki-trial because GitHub Pages serves the site from that folder.
+media_folder: public/images
+public_folder: /wiki-trial/images
+
+output:
+  omit_empty_optional_fields: true # Starlight rejects empty optional fields
+
+collections:
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: src/content/docs
+    create: true
+    nested:
+      subfolders: false
+    meta: { path: {} }
+    fields:
+      - { name: title, label: Title }
+      - { name: description, label: Description, required: false }
+      - name: sidebar
+        label: Sidebar
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: label, label: Label, required: false }
+          - { name: order, label: Order, widget: number, required: false }
+          - { name: hidden, label: Hidden, widget: boolean, required: false }
+          - { name: badge, label: Badge, required: false }
+      - name: template
+        label: Template
+        widget: select
+        options: [doc, splash]
+        default: doc
+      - { name: draft, label: Draft, widget: boolean, required: false }
+      - { name: body, label: Body, widget: markdown }
