@@ -7,6 +7,8 @@ A throwaway trial of the wiki publishing stack. Sveltia CMS edits the Markdown p
 
 Pages live in `src/content/docs/`, and uploaded images in `public/images/`.
 
+Each folder of pages is a group in the sidebar. Starlight would label a group with its raw folder name (`north-america`), so the groups are named in `astro.config.mjs`. A folder created in the editor shows up under its raw name if it sits inside a folder the sidebar already lists, and doesn't show up at all otherwise, until it gets a line there.
+
 ## Running it locally
 
 ```sh

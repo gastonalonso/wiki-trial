@@ -39,5 +39,28 @@ collections:
         widget: select
         options: [doc, splash]
         default: doc
+      - name: hero
+        label: Hero (splash pages only)
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: tagline, label: Tagline, required: false }
+          - name: image
+            label: Image
+            widget: object
+            required: false
+            fields:
+              - { name: file, label: File path (relative to the page), required: false }
+              - { name: alt, label: Alt text, required: false }
+          - name: actions
+            label: Buttons
+            widget: list
+            required: false
+            fields:
+              - { name: text, label: Text }
+              - { name: link, label: Link }
+              - { name: icon, label: Icon, required: false }
+              - { name: variant, label: Style, widget: select, options: [primary, secondary, minimal], required: false }
       - { name: draft, label: Draft, widget: boolean, required: false }
       - { name: body, label: Body, widget: markdown }
