@@ -11,8 +11,8 @@ draft: false
 
 | Fact | Value |
 | --- | --- |
-| Capital | Mexico City 🇲🇽 |
-| Population | about 130 million (2024) 👋 |
+| Capital | Mexico City |
+| Population | about 130 million (2024) |
 | Area | about 1,964,000 km² |
 | Official language(s) | Spanish, plus recognised indigenous languages |
 | Currency | Mexican peso |
