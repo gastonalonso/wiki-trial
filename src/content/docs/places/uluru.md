@@ -9,6 +9,10 @@ description: Uluru is a huge sandstone rock rising from the plains of central Au
 
 *Photo: [Dietmar Rabich](https://commons.wikimedia.org/wiki/File:Petermann_Ranges_(AU),_Uluru-Kata_Tjuta_National_Park,_Uluru,_Kuniya_Walk_--_2019_--_3674.jpg), [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0), via Wikimedia Commons.*
 
+:::note[Preview test]
+This line exists only in a test pull request.
+:::
+
 ## Geology
 
 Uluru is made of arkose, a coarse sandstone, laid down in an ancient basin hundreds of millions of years ago. The layers were later tilted until they stand almost vertical. Because the surrounding rock wore away faster, the hard mass was left standing as an isolated hill, a type sometimes called an inselberg. Much of the rock is hidden underground, and the visible part is only a portion of the whole.
