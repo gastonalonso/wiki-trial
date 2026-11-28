@@ -51,8 +51,9 @@ jobs:
         run: |
           npm ci
           npx astro build --base "/wiki-trial/$PREVIEW_PATH/wiki-trial" --outDir preview-out/wiki-trial
-          # The preview's own front page sends visitors on to the site inside it
-          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=wiki-trial/"><a href="wiki-trial/">Open the preview</a>\n' > preview-out/index.html
+          page=$(scripts/changed-page.sh HEAD^1 HEAD preview-out/wiki-trial)
+          # The preview's own front page, where the pull request's links point, opens that page
+          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=wiki-trial/%s"><a href="wiki-trial/%s">Open the preview</a>\n' "$page" "$page" > preview-out/index.html
 
       - id: preview
         uses: rossjrw/pr-preview-action@v1.8.2
