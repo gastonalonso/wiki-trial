@@ -53,7 +53,9 @@ jobs:
           npx astro build --base "/wiki-trial/$PREVIEW_PATH/wiki-trial" --outDir preview-out/wiki-trial
           page=$(scripts/changed-page.sh HEAD^1 HEAD preview-out/wiki-trial)
           # The preview's own front page, where the pull request's links point, opens that page
-          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=wiki-trial/%s"><a href="wiki-trial/%s">Open the preview</a>\n' "$page" "$page" > preview-out/index.html
+          printf '<!doctype html><meta charset="utf-8"><meta name="preview-build" content="%s"><meta http-equiv="refresh" content="0;url=wiki-trial/%s"><a href="wiki-trial/%s">Open the preview</a>\n' "$BUILD_ID" "$page" "$page" > preview-out/index.html
+        env:
+          BUILD_ID: ${{ github.run_id }}-${{ github.run_attempt }}
 
       - id: preview
         uses: rossjrw/pr-preview-action@v1.8.2
@@ -61,8 +63,23 @@ jobs:
           source-dir: preview-out
           umbrella-dir: previews
           action: ${{ github.event.action == 'closed' && 'remove' || 'deploy' }}
-          wait-for-pages-deployment: true
           qr-code: false
+
+      # GitHub Pages skips a build when a newer push to gh-pages arrives, and reports the
+      # skipped one as failed, so wait for this run's copy to be served rather than for a build.
+      - name: Wait for the preview to go live
+        if: steps.preview.outputs.deployment-action == 'deploy'
+        env:
+          URL: ${{ steps.preview.outputs.preview-url }}
+          BUILD_ID: ${{ github.run_id }}-${{ github.run_attempt }}
+        run: |
+          for attempt in $(seq 1 40); do
+            if curl -fsS "$URL?build=$BUILD_ID-$attempt" | grep -q "content=\"$BUILD_ID\""; then
+              echo "Live after about $(( (attempt - 1) * 10 )) seconds"; exit 0
+            fi
+            sleep 10
+          done
+          echo "The preview was not live after about 7 minutes"; exit 1
 
       - name: Report the preview address
         if: steps.preview.outputs.deployment-action == 'deploy'
