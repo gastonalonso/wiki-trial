@@ -2,7 +2,11 @@
 backend:
   name: github
   repo: gastonalonso/wiki-trial
-  branch: main # every save is a commit to main, which publishes the site
+  branch: main # the site is built from main
+
+# Each saved page gets its own branch and pull request, and moves through
+# Draft, In Review and Ready. Publishing merges it into main, which rebuilds the site.
+publish_mode: editorial_workflow
 
 # Uploaded images are saved in public/images. The path written into a page
 # starts with /wiki-trial because GitHub Pages serves the site from that folder.
