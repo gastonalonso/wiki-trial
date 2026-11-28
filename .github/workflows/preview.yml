@@ -1,0 +1,82 @@
+name: Preview
+
+# Builds each pull request as a copy of the site at /wiki-trial/previews/pr-<number>/,
+# and removes that copy when the pull request is merged or closed.
+#
+# The copy keeps the live site's layout one level down (…/pr-<number>/wiki-trial/…),
+# because Sveltia CMS appends a page's live path, /wiki-trial/<page>/, to the preview address.
+# A "Site preview" status on the pull request carries the address; Sveltia reads it from there.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write # push the preview to gh-pages
+  pull-requests: write # the comment with the preview link
+  statuses: write # the "Site preview" status
+
+concurrency:
+  group: preview-${{ github.event.number }}
+  cancel-in-progress: false
+
+env:
+  PREVIEW_PATH: previews/pr-${{ github.event.number }}
+  STATUS_URL: repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }}
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Report that the preview is building
+        if: github.event.action != 'closed'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh api "$STATUS_URL" -f state=pending -f context="Site preview"
+          -f description="Building a preview of this pull request"
+          -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - uses: actions/checkout@v7
+        if: github.event.action != 'closed'
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        if: github.event.action != 'closed'
+        with:
+          node-version: 24
+          cache: npm
+      - name: Build the preview
+        if: github.event.action != 'closed'
+        run: |
+          npm ci
+          npx astro build --base "/wiki-trial/$PREVIEW_PATH/wiki-trial" --outDir preview-out/wiki-trial
+          # The preview's own front page sends visitors on to the site inside it
+          printf '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=wiki-trial/"><a href="wiki-trial/">Open the preview</a>\n' > preview-out/index.html
+
+      - id: preview
+        uses: rossjrw/pr-preview-action@v1.8.2
+        with:
+          source-dir: preview-out
+          umbrella-dir: previews
+          action: ${{ github.event.action == 'closed' && 'remove' || 'deploy' }}
+          wait-for-pages-deployment: true
+          qr-code: false
+
+      - name: Report the preview address
+        if: steps.preview.outputs.deployment-action == 'deploy'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh api "$STATUS_URL" -f state=success -f context="Site preview"
+          -f description="Preview of this pull request"
+          -f target_url="${{ steps.preview.outputs.preview-url }}"
+
+      - name: Report a failed preview
+        if: failure() && github.event.action != 'closed'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >
+          gh api "$STATUS_URL" -f state=failure -f context="Site preview"
+          -f description="The preview could not be built"
+          -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"

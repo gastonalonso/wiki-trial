@@ -19,3 +19,6 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# pull request preview builds (see .github/workflows/preview.yml)
+preview-out/

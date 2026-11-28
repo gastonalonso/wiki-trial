@@ -1,4 +1,7 @@
-name: Deploy to GitHub Pages
+name: Publish the site
+
+# Builds main and publishes it to the gh-pages branch, which GitHub Pages serves.
+# Pull request previews live in gh-pages too, under previews/, and are left alone here.
 
 on:
   push:
@@ -6,30 +9,29 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
 # Saves made close together queue up; the newest waiting build wins.
 concurrency:
-  group: pages
+  group: publish
   cancel-in-progress: false
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # full history, so each page can show when it last changed
-      - uses: withastro/action@v6
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v5
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: JamesIves/github-pages-deploy-action@v4.9.0
+        with:
+          folder: dist
+          branch: gh-pages
+          clean-exclude: previews/
+          force: false # previews are committed to the same branch, so never overwrite its history

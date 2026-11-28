@@ -1,6 +1,17 @@
 // @ts-check
+import { globSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+
+// Sveltia CMS links to a section's overview page (its index.md) as `<section>/index/`,
+// so each of those addresses redirects to the section itself. The target is relative,
+// because the site's base differs between the live site and pull request previews.
+const overviewRedirects = Object.fromEntries(
+	globSync('**/index.md', { cwd: 'src/content/docs' }).map((file) => {
+		const section = file.replace(/\/?index\.md$/, '');
+		return [`/${section ? `${section}/` : ''}index`, '../'];
+	}),
+);
 
 /** A collapsed sidebar group listing every page in one folder. */
 const folder = (label, directory) => ({
@@ -14,6 +25,7 @@ const folder = (label, directory) => ({
 export default defineConfig({
 	site: 'https://gastonalonso.github.io',
 	base: '/wiki-trial',
+	redirects: overviewRedirects,
 	integrations: [
 		starlight({
 			title: 'Wiki Trial',

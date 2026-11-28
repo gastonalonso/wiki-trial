@@ -3,6 +3,8 @@ backend:
   name: github
   repo: gastonalonso/wiki-trial
   branch: main # the site is built from main
+  # The pull request status that carries a draft's preview address (see .github/workflows/preview.yml)
+  preview_context: Site preview
 
 # Each saved page gets its own branch and pull request, and moves through
 # Draft, In Review and Ready. Publishing merges it into main, which rebuilds the site.
@@ -25,6 +27,9 @@ collections:
     nested:
       subfolders: false
     meta: { path: {} }
+    # Where a page lives, so "View on Live Site" and "View Preview" open it directly.
+    # The CMS adds this to the site's host, or to the address of a draft's preview.
+    preview_path: /wiki-trial/{{slug}}/
     fields:
       - { name: title, label: Title }
       - { name: description, label: Description, required: false }
