@@ -1,6 +1,8 @@
 ---
-title: Nile
+title: Nile 🤘🏼
 description: The Nile is a river of northeastern Africa that flows north from highland and lake sources to a large delta on the Mediterranean Sea.
+template: doc
+draft: false
 ---
 
 The **Nile** flows roughly 6,650 kilometres from East Africa to the Mediterranean Sea and is often described as the longest river in the world, although the [Amazon](../amazon-rainforest/) is sometimes given a longer length depending on how the source is measured.[^1] It flows north, which is unusual for a major river.
