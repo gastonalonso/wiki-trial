@@ -1,0 +1,75 @@
+# Sveltia CMS settings, based on https://sveltiacms.app/docs/frameworks/starlight
+backend:
+  name: github
+  repo: gastonalonso/wiki-trial
+  branch: main # the site is built from main
+  # The pull request status that carries a draft's preview address (see .github/workflows/preview.yml)
+  preview_context: Site preview
+
+# Each saved page gets its own branch and pull request, and moves through
+# Draft, In Review and Ready. Publishing merges it into main, which rebuilds the site.
+publish_mode: editorial_workflow
+
+# Uploaded images are saved in public/images. The path written into a page
+# starts with /wiki-trial because GitHub Pages serves the site from that folder.
+media_folder: public/images
+public_folder: /wiki-trial/images
+
+output:
+  omit_empty_optional_fields: true # Starlight rejects empty optional fields
+
+collections:
+  - name: pages
+    label: Pages
+    label_singular: Page
+    folder: src/content/docs
+    create: true
+    nested:
+      subfolders: false
+    meta: { path: {} }
+    # Where a page lives, so "View on Live Site" and "View Preview" open it directly.
+    # The CMS adds this to the site's host, or to the address of a draft's preview.
+    preview_path: /wiki-trial/{{slug}}/
+    fields:
+      - { name: title, label: Title }
+      - { name: description, label: Description, required: false }
+      - name: sidebar
+        label: Sidebar
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: label, label: Label, required: false }
+          - { name: order, label: Order, widget: number, required: false }
+          - { name: hidden, label: Hidden, widget: boolean, required: false }
+          - { name: badge, label: Badge, required: false }
+      - name: template
+        label: Template
+        widget: select
+        options: [doc, splash]
+        default: doc
+      - name: hero
+        label: Hero (splash pages only)
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: tagline, label: Tagline, required: false }
+          - name: image
+            label: Image
+            widget: object
+            required: false
+            fields:
+              - { name: file, label: File path (relative to the page), required: false }
+              - { name: alt, label: Alt text, required: false }
+          - name: actions
+            label: Buttons
+            widget: list
+            required: false
+            fields:
+              - { name: text, label: Text }
+              - { name: link, label: Link }
+              - { name: icon, label: Icon, required: false }
+              - { name: variant, label: Style, widget: select, options: [primary, secondary, minimal], required: false }
+      - { name: draft, label: Draft, widget: boolean, required: false }
+      - { name: body, label: Body, widget: markdown }
