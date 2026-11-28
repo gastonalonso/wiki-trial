@@ -1,6 +1,8 @@
 ---
 title: United States
 description: The United States spans a continent from the Atlantic to the Pacific, with the Rockies, Great Plains, Mississippi basin and deserts of the Southwest.
+template: doc
+draft: false
 ---
 
 The **United States** covers the central part of North America, plus Alaska in the northwest and the Hawaiian Islands in the Pacific. It is among the largest countries in the world by area and the third most populous, and it contains almost every major climate and landscape type.
@@ -9,7 +11,7 @@ The **United States** covers the central part of North America, plus Alaska in t
 
 | Fact | Value |
 | --- | --- |
-| Capital | Washington, D.C. |
+| Capital | Washington, D.C. 🇺🇸 |
 | Population | about 340 million (2024) |
 | Area | about 9,830,000 km² |
 | Official language(s) | English (designated by executive order in 2025) |
