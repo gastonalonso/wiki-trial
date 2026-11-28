@@ -37,8 +37,8 @@ jobs:
           -f description="Building a preview of this pull request"
           -f target_url="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
+      # Always check out: removing a preview also runs git in the working copy
       - uses: actions/checkout@v7
-        if: github.event.action != 'closed'
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v7
