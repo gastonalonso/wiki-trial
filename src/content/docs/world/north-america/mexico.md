@@ -1,6 +1,8 @@
 ---
 title: Mexico
 description: Mexico spans high volcanic plateaus, deserts, two great mountain ranges and tropical coasts, and is the most populous Spanish-speaking country.
+template: doc
+draft: false
 ---
 
 **Mexico** lies between the United States and Central America, with coasts on the Pacific Ocean, the Gulf of Mexico and the Caribbean Sea. It is the most populous Spanish-speaking country and one of the world's most biologically diverse, with landscapes ranging from desert to rainforest.
@@ -9,8 +11,8 @@ description: Mexico spans high volcanic plateaus, deserts, two great mountain ra
 
 | Fact | Value |
 | --- | --- |
-| Capital | Mexico City |
-| Population | about 130 million (2024) |
+| Capital | Mexico City 🇲🇽 |
+| Population | about 130 million (2024) 👋 |
 | Area | about 1,964,000 km² |
 | Official language(s) | Spanish, plus recognised indigenous languages |
 | Currency | Mexican peso |
